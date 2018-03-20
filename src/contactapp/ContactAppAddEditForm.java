@@ -2,14 +2,18 @@ package contactapp;
 
 public class ContactAppAddEditForm extends javax.swing.JDialog {
     ContactAppManager manager;
+    ContactAppMainForm mainForm;
+    Contact c;
 
-    public ContactAppAddEditForm(java.awt.Frame parent, boolean modal, ContactAppManager manager) {
+    public ContactAppAddEditForm(java.awt.Frame parent, boolean modal, ContactAppManager manager, ContactAppMainForm mainForm) {
         super(parent, modal);
         initComponents();
         this.manager = manager;
+        this.mainForm = mainForm;
     }
   
     void setContact(Contact c) {
+        this.c = c;
         firstNameField2.setText(c.getFirstName());
         lastNameField2.setText(c.getLastName());
         phoneNumberField2.setText(c.getPhoneNum());
@@ -141,20 +145,20 @@ public class ContactAppAddEditForm extends javax.swing.JDialog {
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
         if (manager.addCheck == true) {
             manager.addContact(
-            firstNameField2.getText(),
-            lastNameField2.getText(),
-            phoneNumberField2.getText(),
-            emailField2.getText()
+                firstNameField2.getText(),
+                lastNameField2.getText(),
+                phoneNumberField2.getText(),
+                emailField2.getText()
             );
         }
         else {
-            manager.editContact(
-            firstNameField2.getText(),
-            lastNameField2.getText(),
-            phoneNumberField2.getText(),
-            emailField2.getText(),
-            //index number of contact to be edited
+            c.setFirstName(firstNameField2.getText());
+            c.setLastName(lastNameField2.getText());
+            c.setPhoneNum(phoneNumberField2.getText());
+            c.setEmailAdd(emailField2.getText());
+            manager.editContact(manager.index);
         }
+        mainForm.setDisplayFields(manager.index);
         this.setVisible(false);
     }//GEN-LAST:event_SaveButtonActionPerformed
 

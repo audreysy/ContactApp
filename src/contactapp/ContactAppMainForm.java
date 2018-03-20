@@ -6,9 +6,17 @@ public class ContactAppMainForm extends javax.swing.JFrame {
     public ContactAppMainForm(ContactAppManager manager) {
         initComponents();
         this.manager = manager;
+        displayList.setListData(manager.getContactNames());   
     }
-
-    @SuppressWarnings("unchecked")
+    
+public void setDisplayFields(int i) {
+    firstNameField.setText(manager.contactList[i].getFirstName());
+    lastNameField.setText(manager.contactList[i].getLastName());
+    phoneNumberField.setText(manager.contactList[i].getPhoneNum());
+    emailField.setText(manager.contactList[i].getEmailAdd());
+}
+ 
+@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -28,6 +36,8 @@ public class ContactAppMainForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        displayList.setFixedCellHeight(18);
+        displayList.setValueIsAdjusting(true);
         displayList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 displayListValueChanged(evt);
@@ -165,6 +175,10 @@ public class ContactAppMainForm extends javax.swing.JFrame {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         manager.removeContact(displayList.getSelectedIndex());
         displayList.setListData(manager.getContactNames());
+        firstNameField.setText(null);
+        lastNameField.setText(null);
+        phoneNumberField.setText(null);
+        emailField.setText(null);
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void phoneNumberFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberFieldActionPerformed
@@ -173,18 +187,21 @@ public class ContactAppMainForm extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         manager.addCheck = true;
-        ContactAppAddEditForm bfd = new ContactAppAddEditForm(this, true, manager);
+        ContactAppAddEditForm bfd = new ContactAppAddEditForm(this, true, manager, this);
         bfd.setVisible(true);
         bfd.dispose();
         displayList.setListData(manager.getContactNames());
     }//GEN-LAST:event_addButtonActionPerformed
-
+ 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         manager.addCheck = false;
-        ContactAppAddEditForm bfd = new ContactAppAddEditForm(this, true, manager);
+        ContactAppAddEditForm bfd = new ContactAppAddEditForm(this, true, manager, this);
+        Contact c = manager.getContact(displayList.getSelectedIndex());
+        int index = displayList.getSelectedIndex();
+        bfd.setContact(c);
         bfd.setVisible(true);
         bfd.dispose();
-        displayList.setListData(manager.getContactNames());
+        displayList.setListData(manager.getContactNames());    
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void firstNameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_firstNameFieldFocusGained
@@ -193,10 +210,12 @@ public class ContactAppMainForm extends javax.swing.JFrame {
 
     private void displayListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_displayListValueChanged
         int i = displayList.getSelectedIndex();
+        if (i != -1) {
         firstNameField.setText(manager.contactList[i].getFirstName());
         lastNameField.setText(manager.contactList[i].getLastName());
         phoneNumberField.setText(manager.contactList[i].getPhoneNum());
         emailField.setText(manager.contactList[i].getEmailAdd());
+        }
     }//GEN-LAST:event_displayListValueChanged
 
     public static void main(String args[]) {
