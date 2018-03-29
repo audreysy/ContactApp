@@ -16,8 +16,8 @@ public class ContactAppAddEditForm extends javax.swing.JDialog {
         this.c = c;
         firstNameField2.setText(c.getFirstName());
         lastNameField2.setText(c.getLastName());
-        phoneNumberField2.setText(c.getPhoneNum());
-        emailField2.setText(c.getEmailAdd());
+        phoneNumberField2.setText(c.getPhoneNumber());
+        emailField2.setText(c.getEmail());
     }
     
     @SuppressWarnings("unchecked")
@@ -143,6 +143,7 @@ public class ContactAppAddEditForm extends javax.swing.JDialog {
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
+        //If true, action required is to add a new contact
         if (manager.addCheck == true) {
             manager.addContact(
                 firstNameField2.getText(),
@@ -151,11 +152,12 @@ public class ContactAppAddEditForm extends javax.swing.JDialog {
                 emailField2.getText()
             );
         }
+        //If false, action required is to edit the passed contact
         else {
             c.setFirstName(firstNameField2.getText());
             c.setLastName(lastNameField2.getText());
-            c.setPhoneNum(phoneNumberField2.getText());
-            c.setEmailAdd(emailField2.getText());
+            c.setPhoneNumber(phoneNumberField2.getText());
+            c.setEmail(emailField2.getText());
             manager.editContact(manager.index);
         }
         mainForm.setDisplayFields(manager.index);

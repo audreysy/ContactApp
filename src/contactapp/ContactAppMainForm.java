@@ -9,11 +9,12 @@ public class ContactAppMainForm extends javax.swing.JFrame {
         displayList.setListData(manager.getContactNames());   
     }
     
+//Display contact details given contact index  
 public void setDisplayFields(int i) {
     firstNameField.setText(manager.contactList[i].getFirstName());
     lastNameField.setText(manager.contactList[i].getLastName());
-    phoneNumberField.setText(manager.contactList[i].getPhoneNum());
-    emailField.setText(manager.contactList[i].getEmailAdd());
+    phoneNumberField.setText(manager.contactList[i].getPhoneNumber());
+    emailField.setText(manager.contactList[i].getEmail());
 }
  
 @SuppressWarnings("unchecked")
@@ -173,8 +174,10 @@ public void setDisplayFields(int i) {
     }//GEN-LAST:event_firstNameFieldActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        //Removes the selected contact from the Contacts array
         manager.removeContact(displayList.getSelectedIndex());
         displayList.setListData(manager.getContactNames());
+        //Clears text fields
         firstNameField.setText(null);
         lastNameField.setText(null);
         phoneNumberField.setText(null);
@@ -186,21 +189,26 @@ public void setDisplayFields(int i) {
     }//GEN-LAST:event_phoneNumberFieldActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        //Setting boolean to indicate that the action is ADDING a contact
         manager.addCheck = true;
-        ContactAppAddEditForm bfd = new ContactAppAddEditForm(this, true, manager, this);
-        bfd.setVisible(true);
-        bfd.dispose();
+        //Creating new AddEditForm
+        ContactAppAddEditForm addForm = new ContactAppAddEditForm(this, true, manager, this);
+        addForm.setVisible(true);
+        addForm.dispose();
         displayList.setListData(manager.getContactNames());
     }//GEN-LAST:event_addButtonActionPerformed
  
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        //Setting boolean to indicate that the action is EDITING a contact
         manager.addCheck = false;
-        ContactAppAddEditForm bfd = new ContactAppAddEditForm(this, true, manager, this);
+        //Creating new AddEditForm
+        ContactAppAddEditForm editForm = new ContactAppAddEditForm(this, true, manager, this);
         Contact c = manager.getContact(displayList.getSelectedIndex());
-        int index = displayList.getSelectedIndex();
-        bfd.setContact(c);
-        bfd.setVisible(true);
-        bfd.dispose();
+        manager.index = displayList.getSelectedIndex();
+        //Passing the index of the selected contact to the editForm
+        editForm.setContact(c);
+        editForm.setVisible(true);
+        editForm.dispose();
         displayList.setListData(manager.getContactNames());    
     }//GEN-LAST:event_editButtonActionPerformed
 
@@ -210,11 +218,12 @@ public void setDisplayFields(int i) {
 
     private void displayListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_displayListValueChanged
         int i = displayList.getSelectedIndex();
+        //Default value when no element is selected is -1
         if (i != -1) {
         firstNameField.setText(manager.contactList[i].getFirstName());
         lastNameField.setText(manager.contactList[i].getLastName());
-        phoneNumberField.setText(manager.contactList[i].getPhoneNum());
-        emailField.setText(manager.contactList[i].getEmailAdd());
+        phoneNumberField.setText(manager.contactList[i].getPhoneNumber());
+        emailField.setText(manager.contactList[i].getEmail());
         }
     }//GEN-LAST:event_displayListValueChanged
 

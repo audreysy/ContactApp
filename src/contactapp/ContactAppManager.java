@@ -9,29 +9,32 @@ public class ContactAppManager {
     static boolean addCheck;
     static int index;
     
-    Contact[] contactList = new Contact[10];
-    String[] nameList = new String[10];
+    //Creates array of Contact objects and parallel array of names to be displayed
+    Contact[] contactList = new Contact[max];
+    String[] nameList = new String[max];
     String[] tempList = new String[max];
     
     public ContactAppManager() {
-        
+       
+        //Loads contact information stored in text file
         String[] s;
         String[] data = handler.loadData();
         
         try {
             for (int i = 0; i < data.length; i++) {
                 
-                //Data array will be split whenever there is a space
+                //Data is split into different elements wherever there is a space
                 s = data[i].split(" ");
                 tempList[i] = s[0];
                 
                 Contact c = new Contact();
                 contactList[count] = c;
                 
+                //Each element in the array corresponds to a contact detail
                 contactList[i].setFirstName(s[0]);
                 contactList[i].setLastName(s[1]);
-                contactList[i].setPhoneNum(s[2]);
-                contactList[i].setEmailAdd(s[3]);
+                contactList[i].setPhoneNumber(s[2]);
+                contactList[i].setEmail(s[3]);
                 
                 nameList[i] = s[1] + ", " + s[0];
                 
@@ -43,22 +46,23 @@ public class ContactAppManager {
             }
     }
     
+    //Method to add a new contact to the Contacts array
     void addContact(
             String firstName,
             String lastName,
-            String phoneNum,
-            String emailAdd) {
+            String phoneNumber,
+            String email) {
         
         String[] s = null;
         
         Contact contact = new Contact();
         contact.setFirstName(firstName);
         contact.setLastName(lastName);
-        contact.setPhoneNum(phoneNum);
-        contact.setEmailAdd(emailAdd);
+        contact.setPhoneNumber(phoneNumber);
+        contact.setEmail(email);
         FileHandler handler = new FileHandler(this);
         
-        if (count <= 10) {
+        if (count <= max) {
             contactList[count] = contact;
             nameList[count] = lastName + ", " + firstName;
             count++;
@@ -69,18 +73,27 @@ public class ContactAppManager {
         s = new String[count];
         
         for (int i = 0; i < count; i++) {
-            s[i] = contactList[i].getFirstName() + " " + contactList[i].getLastName() + " " + contactList[i].getPhoneNum() + " " + contactList[i].getEmailAdd();
+            s[i] = contactList[i].getFirstName() + " " + contactList[i].getLastName() + " " + contactList[i].getPhoneNumber() + " " + contactList[i].getEmail();
         }
         
+        //Saves all contact information on text file
         handler.saveData(s);
         
 }
-    
-    
+       
 Contact getContact(int i) {
     return contactList[i];
 }
-    
+
+String[] getContactNames() {
+    String[] returnNames = new String[count];
+    for (int i = 0; i < count; i++) {
+        returnNames[i] = nameList[i];
+    }
+    return returnNames;
+}
+
+//Method to edit an existing contact from the Contacts array
 void editContact(int i) {
    
     String[] s = null;
@@ -90,13 +103,15 @@ void editContact(int i) {
     s = new String[count];
     
     for (int j = 0; j < count; j++) {
-        s[j] = contactList[j].getFirstName() + " " + contactList[j].getLastName() + " " + contactList[j].getPhoneNum() + " " + contactList[j].getEmailAdd();
+        s[j] = contactList[j].getFirstName() + " " + contactList[j].getLastName() + " " + contactList[j].getPhoneNumber() + " " + contactList[j].getEmail();
     }
     
+    //Saves all contact information on text file
     handler.saveData(s);
     
 }
     
+//Method to remove a contact from the Contacts array
 void removeContact(int index) {
     
     String[] s = null;
@@ -112,19 +127,12 @@ void removeContact(int index) {
     s = new String[count];
     
     for (int i = 0; i < count; i++) {
-        s[i] = contactList[i].getFirstName() + " " + contactList[i].getLastName() + " " + contactList[i].getPhoneNum() + " " + contactList[i].getEmailAdd();
+        s[i] = contactList[i].getFirstName() + " " + contactList[i].getLastName() + " " + contactList[i].getPhoneNumber() + " " + contactList[i].getEmail();
     }
     
+    //Saves all contact information on text file
     handler.saveData(s);
     
-}
-    
-String[] getContactNames() {
-    String[] returnNames = new String[count];
-    for (int i = 0; i < count; i++) {
-        returnNames[i] = nameList[i];
-    }
-    return returnNames;
 }
 
 }

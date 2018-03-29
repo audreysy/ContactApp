@@ -3,7 +3,15 @@ package contactapp;
 
 
 public class Contact {
+    
+    //Encapsulating instance variables
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String email;
 
+    
+    //Getting & setting methods
     public String getFirstName() {
         return firstName;
     }
@@ -20,25 +28,22 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getEmailAdd() {
-        return emailAdd;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailAdd(String emailAdd) {
-        this.emailAdd = emailAdd;
+    public void setEmail(String email) {
+        this.email = email;
     }
-    private String firstName;
-    private String lastName;
-    private String phoneNum;
-    private String emailAdd;
+    
 }
 
 
